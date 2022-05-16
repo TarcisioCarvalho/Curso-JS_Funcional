@@ -1,0 +1,14 @@
+Map
+
+[1,2,3].map(fn) O resultado sempre tera o mesmo tamanho do array original
+
+Filter
+
+[1,2,3].filter(fn) fn é responsavel por filtrar o array e gerar um novo array, então caso
+fn retorne true o valor será retornado para o novo array. No caso do filter você pode gerar 
+um array com um tamanho menor que o original.
+
+Reduce
+
+[1,2,3].reduce(fn,i) fn-> função i-> valor inicial
+(acc,el)

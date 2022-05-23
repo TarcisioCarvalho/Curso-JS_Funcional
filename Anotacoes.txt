@@ -12,3 +12,22 @@ Reduce
 
 [1,2,3].reduce(fn,i) fn-> função i-> valor inicial
 (acc,el)
+
+
+Observer Padrão
+
+Quais as vantagens em relações as promises.
+Reusável,
+Stream de dados,
+Operadores.
+
+
+
+VLR_CONSUMO_KWH_FPTA
+VLR_CONSUMO_KVA_FPTA
+VLR_CONSUMO_ERE_FPTA
+VLR_CONSUMO_KW_FPTA
+VLR_CONSUMO_DRE_FPTA
+VLR_CONSUMO_IRR_FPTA
+VLR_CONSUMO_EREIRR_FPTA
+VLR_CONSUMO_INJETADA_FPTA

@@ -1,26 +1,37 @@
 
 const fs = require('fs');
 const path = require('path');
+const { Observable } = require('rxjs');
 
 function lerPasta(caminho){
-   return new Promise((resolve,reject)=>{
+   return new Observable(subscriber=>{
 try {
 
-    const arquivos = fs.readdirSync(caminho);
-    const arquivosCompletos = arquivos.map(arquivo=>path.join(caminho,arquivo));
-    resolve(arquivosCompletos); 
+     fs.readdirSync(caminho).forEach(arquivo=> {
+         subscriber.next(path.join(caminho,arquivo));
+     })
+
+    subscriber.complete();
     
 } catch (error) {
-    reject(error);
+    subscriber.error(error);
 }
    })
 }
 
 function filtraArquivosTerminadosCom(padrao){
+    return createPiepeableOperator(subscriber=>({
+        next(texto){
+            if(texto.endsWith(padrao)) subscriber.next(texto)
+        }
+    }))
+}
+
+/* function filtraArquivosTerminadosCom(padrao){
    return function(array){
     return array.filter(el=> el.endsWith(padrao));
    }
-}
+} */
 
 /* fs.readFile(caminho,(erro,dados)=>{
     resolve( dados.toString());
@@ -107,6 +118,19 @@ function composicao(...fns){
 
             return fn(acc);
         },valor);
+    }
+}
+
+function createPiepeableOperator(operatorFn){
+    return function(source){
+        return  Observable.create(subscriber=>{
+            const sub = operatorFn(subscriber);
+            source.subscribe({
+                next: sub.next,
+                error: sub.error || (e=> subscriber.error(e)),
+                complete: sub.complete || (e => subscriber.complete(e))
+            })
+        })
     }
 }
 

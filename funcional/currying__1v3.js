@@ -11,6 +11,19 @@ function textoComTamanhoEntre(min){
     
 }
 
+
+function aplicarValidacao(fn){
+    return function(valor){
+        try {
+            fn(valor)
+        } catch (e) {
+            throw {error:e}
+        }
+    }
+}
+
 const p1 = {nome:'A',preco:14.99,desc:0.25};
 const forcarTamanhoPadrao = textoComTamanhoEntre(4)(255);
-forcarTamanhoPadrao('nome inválido')(p1.nome);
+const forcarNomeProdutoValido = forcarTamanhoPadrao('nome inválido');
+const validarNomeProduto = aplicarValidacao(forcarNomeProdutoValido);
+apli(p1.nome);
